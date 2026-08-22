@@ -1,58 +1,216 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Space+Grotesk:wght@300..700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
 
 @import "tailwindcss";
 
-/* Theme colors (sync with Hero + Navbar) */
-@theme {
-  --color-primary: #e8781c; /* orange */
-  --color-secondary: #fff; /* white */
-  --color-primary-dull: #f0ae77; /* tacao */
+/* =========================================================
+   HOTECH DESIGN TOKENS
+   ========================================================= */
+
+:root {
+  /* Brand */
+  --hotech-accent: #0077ff;
+  --hotech-accent-secondary: #e85d04;
+
+  /* Backgrounds */
+  --hotech-bg: #f8fafc;
+  --hotech-surface: #ffffff;
+  --hotech-surface-elevated: #ffffff;
+
+  /* Borders */
+  --hotech-border: #e2e8f0;
+
+  /* Typography */
+  --hotech-text: #0f172a;
+  --hotech-text-muted: #475569;
+  --hotech-text-subtle: #64748b;
+
+  /* Interaction */
+  --hotech-focus: #0077ff;
+
+  /* Scrollbar */
+  --hotech-scrollbar-track: #f1f5f9;
+  --hotech-scrollbar-thumb: #94a3b8;
 }
 
-/* Global Styles */
-* {
-  font-family: "Outfit", sans-serif;
-  scrollbar-width: thin;
-  scrollbar-color: #555 #111; /* Custom scrollbar for Firefox */
-  scroll-behavior: smooth; /* Smooth scroll across site */
+/* =========================================================
+   DARK THEME
+   ========================================================= */
+
+.dark {
+  /* Brand */
+  --hotech-accent: #00d2ff;
+  --hotech-accent-secondary: #ff6b35;
+
+  /* Backgrounds */
+  --hotech-bg: #0b0f17;
+  --hotech-surface: #161f2e;
+  --hotech-surface-elevated: #1a2433;
+
+  /* Borders */
+  --hotech-border: #1e293b;
+
+  /* Typography */
+  --hotech-text: #f8fafc;
+  --hotech-text-muted: #cbd5e1;
+  --hotech-text-subtle: #94a3b8;
+
+  /* Interaction */
+  --hotech-focus: #00d2ff;
+
+  /* Scrollbar */
+  --hotech-scrollbar-track: #0b0f17;
+  --hotech-scrollbar-thumb: #475569;
+}
+
+/* =========================================================
+   TAILWIND THEME TOKENS
+   ========================================================= */
+
+@theme {
+  --color-hotech-accent: var(--hotech-accent);
+  --color-hotech-accent-secondary: var(--hotech-accent-secondary);
+
+  --color-hotech-bg: var(--hotech-bg);
+  --color-hotech-surface: var(--hotech-surface);
+  --color-hotech-surface-elevated: var(--hotech-surface-elevated);
+
+  --color-hotech-border: var(--hotech-border);
+
+  --color-hotech-text: var(--hotech-text);
+  --color-hotech-text-muted: var(--hotech-text-muted);
+  --color-hotech-text-subtle: var(--hotech-text-subtle);
+}
+
+/* =========================================================
+   GLOBAL RESET
+   ========================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  color: white;
-  background-color: #09090B; /* Matches Hero background */
+  min-width: 320px;
+  min-height: 100vh;
+
+  margin: 0;
+
+  background-color: var(--hotech-bg);
+  color: var(--hotech-text);
+
+  font-family: "JetBrains Mono", monospace;
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  transition:
+    background-color 200ms ease,
+    color 200ms ease;
 }
 
-/* Hide scrollbar but keep scroll functionality */
+/* Technical / code content */
+
+code,
+pre,
+kbd,
+samp {
+  font-family: "JetBrains Mono", monospace;
+}
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+:focus-visible {
+  outline: 2px solid var(--hotech-focus);
+  outline-offset: 3px;
+}
+
+/* Respect reduced-motion preferences */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color:
+    var(--hotech-scrollbar-thumb)
+    var(--hotech-scrollbar-track);
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--hotech-scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--hotech-scrollbar-thumb);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--hotech-accent);
+}
+
+/* =========================================================
+   UTILITY: HIDE SCROLLBAR
+   ========================================================= */
+
 .no-scrollbar {
-  scrollbar-width: none; /* Firefox */
-}
-.no-scrollbar::-webkit-scrollbar {
-  display: none; /* Chrome, Safari */
+  scrollbar-width: none;
 }
 
-/* Remove spin buttons from number inputs */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* =========================================================
+   FORM CONTROLS
+   ========================================================= */
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
   margin: 0;
+  -webkit-appearance: none;
 }
 
-/* Calendar picker icon (white on dark) */
-::-webkit-calendar-picker-indicator {
+input[type="number"] {
+  appearance: textfield;
+}
+
+/* Calendar icons */
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.dark input[type="date"]::-webkit-calendar-picker-indicator {
   filter: invert(1);
-}
-
-/* Custom scrollbar for modern browsers */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: #111;
-}
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, var(--color-primary), var(--color-secondary));
-  border-radius: 10px;
 }
