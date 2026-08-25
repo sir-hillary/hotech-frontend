@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   ChevronDown,
   ExternalLink,
@@ -92,7 +92,7 @@ const Navbar = () => {
   ------------------------------------------------------- */
 
   useEffect(() => {
-    const handleKeyDown = (event) => {
+    const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setIsSoftwareOpen(false);
 
@@ -103,7 +103,7 @@ const Navbar = () => {
       }
     };
 
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: MouseEvent) => {
       if (
         dropdownRef.current &&
         !(
@@ -155,7 +155,9 @@ const Navbar = () => {
     setIsSoftwareOpen(false);
   };
 
-  const handleDropdownKeyDown = (event) => {
+  const handleDropdownKeyDown = (
+    event: React.KeyboardEvent<HTMLButtonElement>
+  ) => {
     if (
       event.key === "Enter" ||
       event.key === " " ||
@@ -171,7 +173,9 @@ const Navbar = () => {
     }
   };
 
-  const handleMobileMenuKeyDown = (event) => {
+  const handleMobileMenuKeyDown = (
+    event: React.KeyboardEvent<HTMLDivElement>
+  ) => {
     if (event.key === "Escape") {
       closeMenu();
       menuButtonRef.current?.focus();
@@ -226,11 +230,11 @@ const Navbar = () => {
             src={currentLogo}
             alt="Hotech"
             className="
-              h-8 w-auto max-w-[160px]
+              h-10 w-auto max-w-[160px]
               object-contain
               transition-all duration-300
               group-hover:scale-[1.04]
-              sm:h-9
+              sm:h-15
             "
           />
         </Link>

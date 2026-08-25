@@ -1,9 +1,6 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  ArrowUpRight,
-  Mail,
-  MapPin,
-} from "lucide-react";
+import { ArrowUpRight, Mail, MapPin } from "lucide-react";
 
 import logoLight from "../../assets/logo_light.png";
 import logoDark from "../../assets/logo_dark.png";
@@ -14,6 +11,35 @@ import { socialLinks } from "../../config/contact";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+
+  // =========================================================
+  // THEME STATE
+  // =========================================================
+
+  const [isDarkTheme, setIsDarkTheme] = useState(() =>
+    document.documentElement.classList.contains("dark")
+  );
+
+  useEffect(() => {
+    const htmlElement = document.documentElement;
+
+    const updateTheme = () => {
+      setIsDarkTheme(htmlElement.classList.contains("dark"));
+    };
+
+    // Check immediately
+    updateTheme();
+
+    // Watch for changes to the <html> class
+    const observer = new MutationObserver(updateTheme);
+
+    observer.observe(htmlElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   const companyLinks = [
     { name: "About", path: "/about" },
@@ -93,29 +119,21 @@ const Footer = () => {
                   focus-visible:ring-offset-[var(--hotech-surface)]
                 "
               >
-                {/* Light-mode logo */}
-                <img
-                  src={logoDark}
-                  alt={brand.name}
-                  className="
-                    block h-9 w-auto
-                    object-contain
-                    transition-transform duration-300
-                    hover:scale-[1.03]
-                    dark:hidden
-                  "
-                />
+                {/* =================================================
+                    THEME-AWARE LOGO
+                ================================================== */}
 
-                {/* Dark-mode logo */}
                 <img
-                  src={logoLight}
+                  src={isDarkTheme ? logoDark : logoLight}
                   alt={brand.name}
                   className="
-                    hidden h-9 w-auto
+                    block
+                    h-9
+                    w-auto
                     object-contain
-                    transition-transform duration-300
+                    transition-transform
+                    duration-300
                     hover:scale-[1.03]
-                    dark:block
                   "
                 />
               </Link>
@@ -354,8 +372,8 @@ const Footer = () => {
                 text-[var(--hotech-text-muted)]
               "
             >
-              Have a repetitive process, business problem, or
-              digital idea worth solving?
+              Have a repetitive process, business problem, or digital idea worth
+              solving?
             </p>
 
             <Link
@@ -382,7 +400,6 @@ const Footer = () => {
               "
             >
               Start a Conversation
-
               <ArrowUpRight
                 aria-hidden="true"
                 className="
@@ -398,7 +415,7 @@ const Footer = () => {
 
             <div className="mt-6 space-y-3">
               <a
-                href="mailto:hello@hotechstudio.com"
+                href="mailto:h.o.omondi15@gmail.com"
                 className="
                   flex items-center gap-3
                   text-sm
@@ -408,7 +425,7 @@ const Footer = () => {
                 "
               >
                 <Mail className="h-4 w-4 shrink-0" />
-                <span>hello@hotechstudio.com</span>
+                <span>h.o.omondi15@gmail.com</span>
               </a>
 
               <div
