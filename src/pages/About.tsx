@@ -91,6 +91,7 @@ const About = () => {
               Engineering Ideas
               <span
                 className="
+                  mt-4
                   block
                   bg-gradient-to-r
                   from-[var(--hotech-accent)]
